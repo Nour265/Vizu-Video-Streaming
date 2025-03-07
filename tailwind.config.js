@@ -14,8 +14,14 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                primary: '#38b6ff', // Light blue
+                background: '#000000', // Black
+                textLight: '#ffffff', // White text
+            },
         },
     },
 
     plugins: [forms],
 };
+
