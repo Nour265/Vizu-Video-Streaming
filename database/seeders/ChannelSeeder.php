@@ -4,28 +4,22 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Channel;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 
 class ChannelSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('channels')->delete(); // Deletes all existing channels
+        $users = User::all();
 
-        // Ensure a user exists before inserting a channel
-        $user = User::first();
-        if (!$user) {
-            $this->call(UserSeeder::class); // Calls UserSeeder if no users exist
-            $user = User::first(); // Fetch the newly created user
+        foreach ($users as $user) {
+            Channel::create([
+                'UID' => $user->UID,
+                'sub_count' => rand(10, 5000),
+                'description' => 'This is a sample channel for user ' . $user->username,
+                'is_creator' => 1,
+            ]);
         }
 
-        // Insert a default channel
-        Channel::create([
-            'UID' => $user->UID, // Use the existing UID
-            'sub_count' => 100,
-            'description' => 'Default Channel',
-            'is_creator' => 1,
-            'date_created' => now(),
-        ]);
+        echo "✅ Seeded " . count($users) . " channels successfully!\n";
     }
 }

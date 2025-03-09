@@ -11,8 +11,8 @@ return new class extends Migration {
             $table->id('CRID'); // Primary Key
             $table->foreignId('UID')->constrained('users','UID')->onDelete('cascade'); // Foreign Key
             $table->foreignId('VidID')->constrained('videos','VidID')->onDelete('cascade'); // Foreign Key
-            $table->integer('rating')->nullable();
-            $table->text('comment')->nullable();
+            $table->text('comment_text')->nullable(); 
+            $table->integer('rating')->default(0); 
             $table->timestamps();
         });
     }

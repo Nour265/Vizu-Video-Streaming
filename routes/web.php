@@ -1,29 +1,44 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\VideoController;
+use App\Models\Video;
 
+
+
+// ✅ Home Page Route
 Route::get('/', function () {
-    return view('welcome');
-});
+    $videos = Video::latest()->take(12)->get(); // Fetch 12 latest videos
+    return view('home', compact('videos'));
+})->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// ✅ User Registration Routes
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('register');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
-    
-});
+Route::post('/register', [RegisterController::class, 'register']);
 
+// ✅ User Login Routes
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/videos/{VidID}', [VideoController::class, 'show'])->name('videos.show');
+Route::post('/login', [LoginController::class, 'login']);
 
+// ✅ User Logout Route
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-require __DIR__.'/auth.php';
+// ✅ Video Listing Route
+Route::get('/videos', function () {
+    $videos = Video::all();
+    return view('videos.index', compact('videos'));
+})->name('videos.index');
+
+// ✅ Video Detail Route
+Route::get('/videos/{id}', function ($id) {
+    $video = Video::findOrFail($id);
+    return view('videos.show', compact('video'));
+})->name('videos.show');

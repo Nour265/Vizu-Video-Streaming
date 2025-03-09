@@ -3,27 +3,28 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Faker\Factory as Faker;
 
 class UserSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('users')->delete(); // Deletes all existing users but keeps auto-increment
+        
 
-        // Insert a default user
-        User::create([
-            'role' => 'user',
-            'email' => 'test@example.com',
-            'password' => Hash::make('password'), // Securely hash the password
-            'username' => 'testuser',
-            'age' => 25,
-            'gender' => 'male',
-            'date_joined' => now(),
-            'profile_picture' => null,
-        ]);
+        // Generate multiple fake users
+        $faker = Faker::create();
+
+        for ($i = 1; $i <= 10; $i++) { // Change 10 to any number you want
+            User::create([
+                'username' => $faker->userName,
+                'email' => $faker->unique()->safeEmail,
+                'password' => Hash::make('password123'),
+            ]);
+        }
+
+        echo "✅ Seeded 10 users successfully!\n"; // Debug message
     }
 }
 

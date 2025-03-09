@@ -59,15 +59,26 @@
             </div>
         </div>
 
-        <!-- Login Button -->
-        @if(Auth::check())
-            <a href="{{ route('profile') }}" class="hover:text-primary transition">Profile</a>
-            <a href="{{ route('logout') }}" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition">Logout</a>
-        @else
-            <a href="{{ route('login') }}" class="bg-primary text-black px-4 py-2 rounded-md hover:bg-blue-400 transition">Login</a>
-        @endif
+        <!-- User Authentication Buttons -->
+        <div class="flex space-x-4 items-center">
+            @auth
+                <!-- If user is logged in -->
+               
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition">
+                        Logout
+                    </button>
+                </form>
+            @else
+                <!-- If user is NOT logged in -->
+                <a href="{{ route('login') }}" class="bg-primary text-black px-4 py-2 rounded-md hover:bg-blue-400 transition">Login</a>
+                <a href="{{ route('register') }}" class="bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition">Register</a>
+            @endauth
+        </div>
     </div>
 </nav>
+
 
 
     <!-- Main Content -->

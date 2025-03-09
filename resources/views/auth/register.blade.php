@@ -1,52 +1,93 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+@extends('layouts.app')
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
+@section('content')
+<div class="flex items-center justify-center">
+    <div class="bg-gray-900 text-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-6 text-center">Sign Up</h2>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <!-- Username Field -->
+            <div class="mb-4">
+                <label class="block text-gray-400">Username</label>
+                <input type="text" name="username" required
+                       class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded-lg focus:ring focus:ring-primary">
+                @error('username') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+            </div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+            <!-- Email Field -->
+            <div class="mb-4">
+                <label class="block text-gray-400">Email</label>
+                <input type="email" name="email" required
+                       class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded-lg focus:ring focus:ring-primary">
+                @error('email') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+            </div>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+            <!-- Password Field -->
+            <div class="mb-4 relative">
+                <label class="block text-gray-400">Password</label>
+                <div class="relative">
+                    <input type="password" name="password" id="register-password" required
+                           class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded-lg pr-16">
+                    
+                    <!-- Show/Hide Password Button -->
+                    <button type="button" id="toggle-register-password"
+                            class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-white text-sm font-medium">
+                        Show
+                    </button>
+                </div>
+                @error('password') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+            </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <!-- Confirm Password Field -->
+            <div class="mb-4 relative">
+                <label class="block text-gray-400">Confirm Password</label>
+                <div class="relative">
+                    <input type="password" name="password_confirmation" id="confirm-password" required
+                           class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded-lg pr-16">
+                    
+                    <!-- Show/Hide Confirm Password Button -->
+                    <button type="button" id="toggle-confirm-password"
+                            class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-white text-sm font-medium">
+                        Show
+                    </button>
+                </div>
+            </div>
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+            <!-- Submit Button -->
+            <button type="submit" class="w-full bg-primary text-black font-semibold py-2 rounded-lg hover:bg-blue-400 transition">
+                Sign Up
+            </button>
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
+            <!-- Login Link -->
+            <p class="text-gray-400 text-sm mt-4 text-center">
+                Already have an account? <a href="{{ route('login') }}" class="text-primary hover:underline">Login</a>
+            </p>
+        </form>
+    </div>
+</div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
+<!-- JavaScript for Password Toggle -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    function setupPasswordToggle(inputId, toggleId) {
+        const passwordInput = document.getElementById(inputId);
+        const toggleButton = document.getElementById(toggleId);
 
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+        toggleButton.addEventListener("click", function () {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleButton.textContent = "Hide";
+            } else {
+                passwordInput.type = "password";
+                toggleButton.textContent = "Show";
+            }
+        });
+    }
+
+    setupPasswordToggle("register-password", "toggle-register-password");
+    setupPasswordToggle("confirm-password", "toggle-confirm-password");
+});
+</script>
+@endsection
