@@ -6,7 +6,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @foreach($videos as $video)
             <div class="bg-gray-800 shadow-md rounded-lg overflow-hidden">
-                <a href="{{ route('videos.show', $video->VidID) }}">
+                <a href="{{ route('video.show', $video->VidID) }}">
                     <img src="{{ asset('storage/' . $video->thumbnail) }}" class="w-full h-48 object-cover">
                 </a>
                 <div class="p-4">

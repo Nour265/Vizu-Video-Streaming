@@ -1,11 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+
+<link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+
 <div class="flex flex-col md:flex-row gap-6">
     <!-- Video Player -->
     <div class="w-full md:w-2/3">
-        <video controls class="w-full rounded-lg border-2 border-primary">
-            <source src="{{ asset('videos/sample.mp4') }}" type="video/mp4">
+        <video controls class="w-full rounded-lg border-2 border-primary" id="player">
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
 
@@ -18,14 +21,18 @@
             <button class="bg-primary text-white px-4 py-2 rounded hover:bg-blue-400">Subscribe</button>
         </div>
 
-        <!-- Like & Dislike Buttons -->
-        <div class="mt-4 flex items-center space-x-4">
-            <button id="like-btn" class="flex items-center text-gray-400 hover:text-primary" onclick="toggleLike()">
-                👍 <span id="like-count" class="ml-1">100</span>
-            </button>
-            <button id="dislike-btn" class="flex items-center text-gray-400 hover:text-primary" onclick="toggleDislike()">
-                👎 <span id="dislike-count" class="ml-1">5</span>
-            </button>
+        <!-- Star Rating System -->
+        <div class="mt-6">
+            <h3 class="text-lg font-semibold text-primary">Rate this video:</h3>
+            <div class="flex space-x-1 mt-2">
+                @for ($i = 1; $i <= 5; $i++)
+                    <button id="star-{{ $i }}" class="text-gray-400 hover:text-yellow-400 text-2xl" 
+                        onmouseover="highlightStars({{ $i }})" 
+                        onmouseout="resetStars()" 
+                        onclick="rateVideo({{ $i }})">★
+                    </button>
+                @endfor
+            </div>
         </div>
 
         <!-- Comment Section -->
@@ -65,51 +72,37 @@
     </div>
 </div>
 
-<!-- JavaScript for Like & Dislike -->
+<!-- JavaScript for Rating -->
 <script>
-    let liked = false;
-    let disliked = false;
-    let likeCount = 100;
-    let dislikeCount = 5;
+    let rating = 0;
 
-    function toggleLike() {
-        if (!liked) {
-            likeCount++;
-            document.getElementById("like-btn").classList.add("text-primary");
-            liked = true;
-
-            if (disliked) {
-                dislikeCount--;
-                document.getElementById("dislike-btn").classList.remove("text-primary");
-                disliked = false;
-            }
-        } else {
-            likeCount--;
-            document.getElementById("like-btn").classList.remove("text-primary");
-            liked = false;
-        }
-        document.getElementById("like-count").textContent = likeCount;
-        document.getElementById("dislike-count").textContent = dislikeCount;
+function highlightStars(star) {
+    for (let i = 1; i <= star; i++) {
+        document.getElementById("star-" + i).classList.add("text-yellow-400");
     }
+}
 
-    function toggleDislike() {
-        if (!disliked) {
-            dislikeCount++;
-            document.getElementById("dislike-btn").classList.add("text-primary");
-            disliked = true;
-
-            if (liked) {
-                likeCount--;
-                document.getElementById("like-btn").classList.remove("text-primary");
-                liked = false;
-            }
+function resetStars() {
+    for (let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+            document.getElementById("star-" + i).classList.add("text-yellow-400");
         } else {
-            dislikeCount--;
-            document.getElementById("dislike-btn").classList.remove("text-primary");
-            disliked = false;
+            document.getElementById("star-" + i).classList.remove("text-yellow-400");
         }
-        document.getElementById("like-count").textContent = likeCount;
-        document.getElementById("dislike-count").textContent = dislikeCount;
     }
+}
+
+function rateVideo(star) {
+    rating = star;
+}
 </script>
+
+
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const player = new Plyr('#player');
+    });
+</script>
+
 @endsection
