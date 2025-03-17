@@ -8,7 +8,7 @@
     <!-- Video Player -->
     <div class="w-full md:w-2/3">
         <video controls class="w-full rounded-lg border-2 border-primary" id="player">
-            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            <source src="{{ 'https://www.w3schools.com/html/mov_bbb.mp4' }}" type="video/mp4">
             Your browser does not support the video tag.
         </video>
 

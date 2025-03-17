@@ -6,7 +6,6 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\VideoController;
 use App\Models\Video;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\HomeController;
 
 // ✅ Home Page Route
 Route::get('/', function () {
@@ -32,20 +31,19 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // ✅ Video Listing Route
-Route::get('/videos', function () {
+Route::get('/video', function () {
     $videos = Video::all();
-    return view('videos.index', compact('videos'));
+    return view('video', compact('videos')); // Corrected to videos.index
 })->name('videos.index');
 
 // ✅ Video Detail Route
 Route::get('/video/{id}', function ($id) {
     $video = DB::table('videos')->where('VidID', $id)->first();
-
     if (!$video) {
         abort(404);
     }
+    return view('video', ['video' => $video]); // Correct view reference
+})->name('video.show'); // Changed to video.show for clarity
 
-    return view('video', ['video' => $video]);
-})->name('video.show');
 
 Route::get('/search', [VideoController::class, 'search'])->name('videos.search');
