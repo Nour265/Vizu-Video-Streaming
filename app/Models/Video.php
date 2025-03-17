@@ -29,5 +29,8 @@ class Video extends Model
     {
         return $this->hasMany(CommentRate::class, 'VidID');
     }
+    public function ratings() {
+        return $this->hasMany(CommentRate::class);
+    }
 }
 

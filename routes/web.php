@@ -5,8 +5,8 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\VideoController;
 use App\Models\Video;
-
-
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\HomeController;
 
 // ✅ Home Page Route
 Route::get('/', function () {
@@ -38,9 +38,14 @@ Route::get('/videos', function () {
 })->name('videos.index');
 
 // ✅ Video Detail Route
-Route::get('/videos/{id}', function ($id) {
-    $video = Video::findOrFail($id);
-    return view('videos.show', compact('video'));
-})->name('videos.show');
+Route::get('/video/{id}', function ($id) {
+    $video = DB::table('videos')->where('VidID', $id)->first();
+
+    if (!$video) {
+        abort(404);
+    }
+
+    return view('video', ['video' => $video]);
+})->name('video.show');
 
 Route::get('/search', [VideoController::class, 'search'])->name('videos.search');
