@@ -42,3 +42,5 @@ Route::get('/videos/{id}', function ($id) {
     $video = Video::findOrFail($id);
     return view('videos.show', compact('video'));
 })->name('videos.show');
+
+Route::get('/search', [VideoController::class, 'search'])->name('videos.search');

@@ -48,16 +48,17 @@
         </a>
 
         <!-- Search Bar -->
-        <div class="flex-grow mx-6 max-w-lg">
-            <div class="relative">
-                <input type="text" placeholder="Search videos..."
-                    class="w-full px-4 py-2 rounded-full border bg-gray-800 text-white 
-                        focus:outline-none focus:ring-2 focus:ring-primary">
-                <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary text-black px-4 py-1 rounded-full">
-                    🔍
-                </button>
-            </div>
-        </div>
+        <form action="{{ route('videos.search') }}" method="GET" class="flex-grow mx-6 max-w-lg">
+    <div class="relative">
+        <input type="text" name="query" placeholder="Search videos..." 
+            class="w-full px-4 py-2 rounded-full border bg-gray-200 text-black 
+                   focus:outline-none focus:ring-2 focus:ring-primary"
+            value="{{ request()->input('query') }}">
+        <button type="submit" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary text-black px-4 py-1 rounded-full">
+            🔍
+        </button>
+    </div>
+</form>
 
         <!-- User Authentication Buttons -->
         <div class="flex space-x-4 items-center">
