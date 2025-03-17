@@ -5,7 +5,8 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\VideoController;
 use App\Models\Video;
-
+use App\Http\Controllers\AdminController;
+use App\Http\Middleware\IsAdmin;
 
 
 // ✅ Home Page Route
@@ -44,3 +45,9 @@ Route::get('/videos/{id}', function ($id) {
 })->name('videos.show');
 
 Route::get('/search', [VideoController::class, 'search'])->name('videos.search');
+
+
+// ✅ Admin Routes
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+Route::get('/admin/manage/users', [AdminController::class, 'manageUsers'])->name('admin.manage.users');
+Route::get('/admin/manage/videos', [AdminController::class, 'manageVideos'])->name('admin.manage.videos');

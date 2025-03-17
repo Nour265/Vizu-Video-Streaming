@@ -14,6 +14,9 @@ class LoginController extends Controller
     ]);
 
     if (Auth::attempt($credentials)) {
+        if (Auth::user()->role === 'admin') {
+            return redirect()->route('admin.dashboard')->with('success', 'Welcome Admin!');
+        }
         return redirect()->route('home')->with('success', 'Welcome back!');
     }
 
