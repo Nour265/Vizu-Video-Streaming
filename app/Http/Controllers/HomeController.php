@@ -8,7 +8,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $videos = Video::latest()->take(12)->get(); // Fetch latest videos
+        $videos = Video::latest()->take(12)->get();
         return view('home', compact('videos'));
     }
 }

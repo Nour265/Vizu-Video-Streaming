@@ -23,7 +23,6 @@ class RegisterController extends Controller
         'password' => Hash::make($request->password),
     ]);
 
-    // Log in user automatically after sign up
     Auth::login($user);
 
     return redirect()->route('home')->with('success', 'Account created successfully!');

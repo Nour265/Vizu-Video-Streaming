@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentRateController extends Controller
 {
-    // ✅ Store a new comment & rating
+    // Store a new comment & rating
     public function store(Request $request, $videoId)
     {
         $request->validate([
@@ -27,7 +27,7 @@ class CommentRateController extends Controller
         return back()->with('success', 'Comment added successfully!');
     }
 
-    // ✅ Show all comments for a video
+    // Show all comments for a video
     public function show($videoId)
     {
         $video = Video::findOrFail($videoId);
@@ -36,7 +36,7 @@ class CommentRateController extends Controller
         return view('videos.comments', compact('video', 'comments'));
     }
 
-    // ✅ Delete a comment
+    // Delete a comment
     public function destroy($commentId)
     {
         $comment = CommentRate::findOrFail($commentId);
