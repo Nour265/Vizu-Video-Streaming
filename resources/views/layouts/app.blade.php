@@ -42,10 +42,11 @@
     <nav class="shadow-md fixed w-full top-0 z-50 bg-black text-white">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
         <!-- Logo -->
-        <a href="{{ route('home') }}" class="flex items-center space-x-2">
+        <a href="{{ Auth::check() && Auth::user()->role === 'admin' ? route('admin.dashboard') : route('home') }}" class="flex items-center space-x-2">
             <img src="{{ asset('images/vizu.png') }}" alt="Vizu Logo" class="h-8 w-auto">
             <span class="text-primary text-2xl font-bold">Vizu</span>
         </a>
+
 
         <!-- Search Bar -->
         <form action="{{ route('videos.search') }}" method="GET" class="flex-grow mx-6 max-w-lg">
