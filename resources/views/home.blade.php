@@ -6,7 +6,7 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             @foreach($videos as $video)
-                <div class="bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-md">
+                <div class="bg-cardBg border border-gray-600 rounded-lg overflow-hidden shadow-md">
                     <!-- Video Thumbnail -->
                     <a href="{{ route('videos.index', $video->VidID) }}">
                         <img src="{{ asset($video->thumbnail ?? 'images/default-thumbnail.jpg') }}" 
