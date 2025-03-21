@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="flex items-center justify-center">
-    <div class="bg-gray-900 text-white p-8 rounded-lg shadow-lg w-full max-w-md">
+<div class="mt-20 flex items-center justify-center">
+    <div class=" text-white p-8 rounded-lg  w-full max-w-md">
         <h2 class="text-2xl font-bold mb-6 text-center">Sign Up</h2>
 
         <form method="POST" action="{{ route('register') }}">

@@ -15,9 +15,11 @@
 
                     <!-- Video Details -->
                     <div class="p-4">
-                        <h3 class="text-lg font-semibold text-white truncate">
+                        <!-- ✅ Video Title Changes Color Dynamically -->
+                        <h3 class="text-lg font-semibold transition-colors duration-500 video-title">
                             <a href="{{ route('videos.index', $video->VidID) }}">{{ $video->title }}</a>
                         </h3>
+
                         <p class="text-gray-400 text-sm truncate">{{ $video->description }}</p>
                         <span class="text-gray-500 text-xs">Views: {{ number_format($video->view_count) }}</span>
                     </div>
