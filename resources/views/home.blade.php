@@ -8,7 +8,7 @@
             @foreach($videos as $video)
                 <div class="bg-cardBg border border-gray-600 rounded-lg overflow-hidden shadow-md">
                     <!-- Video Thumbnail -->
-                    <a href="{{ route('videos.index', $video->VidID) }}">
+                    <a href="{{ route('video.show', $video->VidID) }}">
                         <img src="{{ asset($video->thumbnail ?? 'images/default-thumbnail.jpg') }}" 
                             alt="Thumbnail" class="w-full h-40 sm:h-48 md:h-56 object-cover bg-gray-800">
                     </a>
@@ -16,7 +16,7 @@
                     <!-- Video Details -->
                     <div class="p-4">
                         <h3 class="text-lg font-semibold text-white truncate">
-                            <a href="{{ route('videos.index', $video->VidID) }}">{{ $video->title }}</a>
+                            <a href="{{ route('video.show', $video->VidID) }}">{{ $video->title }}</a>
                         </h3>
                         <p class="text-gray-400 text-sm truncate">{{ $video->description }}</p>
                         <span class="text-gray-500 text-xs">Views: {{ number_format($video->view_count) }}</span>

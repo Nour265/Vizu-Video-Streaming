@@ -35,17 +35,13 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/video', function () {
     $videos = Video::all();
     return view('video', compact('videos'));
-})->name('videos.index');
+})->name('video.show');
 
 // Video Detail Route
 Route::get('/video/{id}', function ($id) {
-    $video = DB::table('videos')->where('VidID', $id)->first();
-    if (!$video) {
-        abort(404);
-    }
+    $video = Video::where('VidID', $id)->firstOrFail();
     return view('video', ['video' => $video]);
 })->name('video.show');
-
 
 Route::get('/search', [VideoController::class, 'search'])->name('videos.search');
 
