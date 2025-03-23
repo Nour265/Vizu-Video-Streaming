@@ -39,14 +39,13 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/video', function () {
     $videos = Video::all();
     return view('video', compact('videos'));
-})->name('videos.index');
+})->name('video.show');
 
 // Video Detail Route
-Route::get('/videos/{id}', function ($id) {
-    $video = Video::findOrFail($id);
-    return view('videos.show', compact('video'));
-})->name('videos.show');
-
+Route::get('/video/{id}', function ($id) {
+    $video = Video::where('VidID', $id)->firstOrFail();
+    return view('video', ['video' => $video]);
+})->name('video.show');
 
 Route::get('/search', [VideoController::class, 'search'])->name('videos.search');
 
