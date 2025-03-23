@@ -66,7 +66,7 @@
                 <div id="user-dropdown" class="absolute right-0 mt-2 w-40 bg-gray-800 border border-gray-700 rounded-lg shadow-lg py-2 hidden transition-opacity duration-300">
                     @auth
                         <!-- ✅ If logged in -->
-                        <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-white hover:bg-gray-700 transition">Profile</a>
+                        <a href="{{ route('profile.show', Auth::id()) }}" class="block px-4 py-2 text-white hover:bg-gray-700 transition">Profile</a>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
                             <button type="submit" class="w-full text-left px-4 py-2 text-red-400 hover:bg-gray-700 transition">

@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProfileController;
 
 // Home Page Route
 Route::get('/', function () {
@@ -59,3 +60,11 @@ Route::get('/admin/manage/videos', [AdminController::class, 'manageVideos'])->na
 // ✅ Contact Us Routes
 Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');
 Route::post('/contact', [ContactController::class, 'sendContactEmail'])->name('contact.send');
+
+
+Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile/{id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});

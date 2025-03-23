@@ -8,9 +8,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
+    public function show($id): View
+    {
+        // Fetch the user by ID
+        $user = User::findOrFail($id);
+
+        // Pass the user data to the view
+        return view('profile.show', compact('user'));
+    }
     
     public function edit(Request $request): View
     {
@@ -26,6 +35,13 @@ class ProfileController extends Controller
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
+        }
+
+        if ($request->hasFile('profile_picture')) {
+            // Store the uploaded file in the 'public/profile_pictures' directory
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+            // Save the file path in the database
+            $request->user()->profile_picture = $path;
         }
 
         $request->user()->save();
