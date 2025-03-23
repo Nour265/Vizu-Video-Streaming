@@ -28,11 +28,31 @@
 
     <!-- ✅ Sidebar (Always Dark) -->
     <div id="sidebar" class="fixed left-0 top-0 w-60 bg-sidebarDark text-white h-full min-h-screen p-4 transform -translate-x-full transition-transform duration-300">
-        <h2 class="text-xl font-bold text-primary mb-6">Menu</h2>
+    <h2 class="text-xl font-bold text-primary mb-6">Menu</h2>
         <ul class="space-y-4">
-            <a href="{{ route('contact.show') }}" class="block bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition text-center">
-                Contact Us
-            </a>
+            <li>
+                <a href="{{ route('admin.dashboard') }}" class="block py-2 px-4 rounded bg-primary text-black font-semibold">
+                    🏠 Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.manage.users') }}" class="block py-2 px-4 rounded hover:bg-gray-700">
+                    👥 Manage Users
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.manage.videos') }}" class="block py-2 px-4 rounded hover:bg-gray-700">
+                    🎥 Manage Videos
+                </a>
+            </li>
+            <li>
+                <form action="{{ route('logout') }}" method="POST" class="mt-4">
+                    @csrf
+                    <button type="submit" class="w-full py-2 px-4 bg-red-500 rounded hover:bg-red-600">
+                        🚪 Logout
+                    </button>
+                </form>
+            </li>
         </ul>
     </div>
 
@@ -43,18 +63,6 @@
         <nav class="shadow-md fixed w-full top-0 z-50 bg-black text-white px-6 py-3 flex items-center justify-between">
             <!-- ☰ Sidebar Toggle -->
             <button id="sidebar-toggle" class="text-white text-2xl focus:outline-none">&#9776;</button>
-
-            <!-- ✅ Search Bar -->
-            <div class="flex justify-center flex-grow">
-                <form action="{{ route('videos.search') }}" method="GET" class="relative w-full max-w-lg">
-                    <input type="text" name="query" placeholder="Search videos..." 
-                        class="w-full px-4 py-2 rounded-full border border-gray-600 bg-gray-800 text-white 
-                               focus:outline-none focus:ring-2 focus:ring-primary transition">
-                    <button type="submit" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary text-black px-4 py-1 rounded-full font-semibold">
-                        Search
-                    </button>
-                </form>
-            </div>
 
             <!-- ✅ User Icon (Top Right) -->
             <div class="relative">
