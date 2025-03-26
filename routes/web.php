@@ -58,8 +58,6 @@ Route::put('/admin/users/{user}', [AdminController::class, 'updateUser'])->name(
 Route::delete('/admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
 Route::get('/admin/manage-users/search', [AdminController::class, 'searchUsers'])->name('admin.manage.users.search');
 Route::get('/admin/manage-videos/search', [AdminController::class, 'searchVideos'])->name('admin.manage.videos.search');
-// This is the route for viewing the video, assuming you want admins to use the same route
-Route::get('/video/{id}', [VideoController::class, 'show'])->name('video.show');
 
 
 // ✅ Contact Us Routes
