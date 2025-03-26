@@ -6,8 +6,6 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\VideoController;
 use App\Models\Video;
 use App\Http\Controllers\AdminController;
-use App\Http\Middleware\IsAdmin;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 
@@ -55,6 +53,13 @@ Route::get('/search', [VideoController::class, 'search'])->name('videos.search')
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 Route::get('/admin/manage/users', [AdminController::class, 'manageUsers'])->name('admin.manage.users');
 Route::get('/admin/manage/videos', [AdminController::class, 'manageVideos'])->name('admin.manage.videos');
+Route::get('/admin/users/{user}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
+Route::put('/admin/users/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
+Route::delete('/admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
+Route::get('/admin/manage-users/search', [AdminController::class, 'searchUsers'])->name('admin.manage.users.search');
+Route::get('/admin/manage-videos/search', [AdminController::class, 'searchVideos'])->name('admin.manage.videos.search');
+// This is the route for viewing the video, assuming you want admins to use the same route
+Route::get('/video/{id}', [VideoController::class, 'show'])->name('video.show');
 
 
 // ✅ Contact Us Routes
