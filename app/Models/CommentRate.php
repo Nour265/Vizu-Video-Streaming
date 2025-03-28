@@ -12,7 +12,7 @@ class CommentRate extends Model
     protected $primaryKey = 'CRID';
 
     protected $fillable = [
-        'UID', 'VidID', 'rating', 'comment'
+        'UID', 'VidID', 'rating', 'comment_text'
     ];
 
     public function user()

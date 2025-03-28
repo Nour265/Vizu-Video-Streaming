@@ -27,7 +27,7 @@ class Video extends Model
 
     public function comments()
     {
-        return $this->hasMany(CommentRate::class, 'VidID');
+        return $this->hasMany(CommentRate::class, 'VidID', 'VidID');
     }
     public function ratings() {
         return $this->hasMany(CommentRate::class);

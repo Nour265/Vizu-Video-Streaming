@@ -8,6 +8,7 @@ use App\Models\Video;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CommentRateController;
 
 // Home Page Route
 Route::get('/', function () {
@@ -71,3 +72,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+// Comment rating routes
+Route::post('/video/{videoId}/comment', [CommentRateController::class, 'store'])->name('comment.store');
+Route::get('/video/{videoId}/comments', [CommentRateController::class, 'show'])->name('comments.show');
+Route::delete('/comment/{commentId}', [CommentRateController::class, 'destroy'])->name('comment.destroy');
