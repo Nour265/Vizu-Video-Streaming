@@ -7,13 +7,18 @@ use App\Models\Video;
 class VideoController extends Controller
 {
     public function search(Request $request)
-    {
-        $query = $request->input('query');
+{
+    $query = $request->input('query');
+    $videos = Video::where('title', 'like', '%' . $query . '%')->get();
 
-        $videos = Video::where('title', 'LIKE', "%{$query}%")->get();
-
-        return view('videos.search', compact('videos', 'query'));
+    // If AJAX, return partial view
+    if ($request->ajax()) {
+        return view('partials.search-results', compact('videos'))->render();
     }
+
+    // Fallback if not AJAX
+    return view('videos.search', compact('videos', 'query'));
+}
 
 
     public function show($id)
@@ -21,5 +26,8 @@ class VideoController extends Controller
         $video = Video::where('VidID', $id)->firstOrFail();  // Get the video by ID
         return view('video.show', compact('video'));  // Pass video data to the view
     }
+
+    
+
 }
 

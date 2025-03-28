@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="pt-20 px-6 text-white">
+    <div class="pt-2 px-6 text-white">
         <h2 class="text-3xl font-bold mb-6 text-primary">Search Results for "{{ $query }}"</h2>
 
         @if($videos->count() > 0)

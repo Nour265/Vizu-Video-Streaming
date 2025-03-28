@@ -71,3 +71,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
