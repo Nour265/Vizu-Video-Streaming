@@ -8,12 +8,12 @@
     <!-- Video Player -->
     <div class="w-full md:w-2/3">
         <video controls class="w-full rounded-lg border-2 border-primary" id="player">
-            <source src="{{ 'https://www.w3schools.com/html/mov_bbb.mp4' }}" type="video/mp4">
+            <source src="{{ asset('videos/' . $video->video_path) }}" type="video/mp4">
             Your browser does not support the video tag.
         </video>
 
-        <h2 class="mt-4 text-2xl font-semibold text-primary">Sample Video Title</h2>
-        <p class="text-gray-400 text-sm">10k views • 2 days ago</p>
+        <h2 class="mt-4 text-2xl font-semibold text-primary">{{ $video->title }}</h2>
+        <p class="text-gray-400 text-sm">{{ number_format($video->view_count) }} views • {{ $video->created_at->diffForHumans() }}</p>
 
         <!-- Subscribe Button -->
         <div class="mt-4 flex items-center">
