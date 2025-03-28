@@ -9,13 +9,20 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentRateController extends Controller
 {
-    // Store a new comment & rating
     public function store(Request $request, $videoId)
     {
         $request->validate([
             'comment_text' => 'required|string|max:500',
             'rating' => 'required|integer|min:1|max:5',
         ]);
+
+        $existing = CommentRate::where('VidID', $videoId)
+                    ->where('UID', Auth::id())
+                    ->first();
+
+        if ($existing) {
+            return back()->with('error', 'You have already rated/commented on this video.');
+        }
 
         CommentRate::create([
             'VidID' => $videoId,
@@ -24,16 +31,14 @@ class CommentRateController extends Controller
             'rating' => $request->rating,
         ]);
 
-        return back()->with('success', 'Comment added successfully!');
+        return back()->with('success', 'Thank you for your feedback!');
     }
 
     // Show all comments for a video
     public function show($videoId)
     {
-        $video = Video::findOrFail($videoId);
-        $comments = CommentRate::where('VidID', $videoId)->latest()->get();
-
-        return view('videos.comments', compact('video', 'comments'));
+        $video = Video::with(['comments.user'])->findOrFail($videoId);
+        return view('video', compact('video'));
     }
 
     // Delete a comment
