@@ -66,7 +66,22 @@
                     <span class="font-semibold text-white">{{ $comment->user->username }}</span>
                     <span class="text-gray-500 text-xs">{{ $comment->created_at->diffForHumans() }}</span>
                 </div>
-                
+
+                @if(auth()->check() && (auth()->id() == $comment->UID || auth()->user()->is_admin))
+                        <form action="{{ route('comment.destroy', $comment->CRID) }}" method="POST" class="ml-2">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" 
+                                    class="text-red-500 hover:text-red-400 text-xs flex items-center gap-1 px-2 py-1 rounded hover:bg-red-900/20"
+                                    onclick="return confirm('Are you sure you want to delete this comment?')">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                                Delete
+                            </button>
+                        </form>
+                        @endif
+                    
                 <!-- Rating Stars -->
                 <div class="flex mt-1">
                     @for($i = 1; $i <= 5; $i++)
@@ -80,23 +95,35 @@
         </div>
     </div>
     @endforeach
-</div>
-        </div>
+    </div>
+    </div>
     </div>
 
     <!-- Recommended Videos -->
     <div class="w-full md:w-1/3">
-        <h3 class="text-lg font-semibold mb-4 text-primary">Recommended</h3>
-        @foreach([1, 2, 3, 4, 5] as $id)
-            <a href="{{ route('video.show', $id) }}" class="flex items-center gap-3 mb-4">
-                <img src="https://via.placeholder.com/120x70" alt="Thumbnail" class="rounded-lg w-24 h-14 object-cover border-2 border-primary">
-                <div>
-                    <h4 class="text-sm font-semibold text-white">Sample Video {{ $id }}</h4>
-                    <p class="text-gray-400 text-xs">5k views • 1 day ago</p>
+    <h3 class="text-lg font-semibold mb-4 text-primary">Recommended</h3>
+
+    @if(isset($recommended) && $recommended->isNotEmpty())
+        @foreach($recommended as $recVideo)
+            <a href="{{ route('video.show', $recVideo->VidID) }}" class="flex items-center gap-3 mb-4 group">
+                <img src="{{ asset($recVideo->thumbnail ?? 'images/default-thumbnail.jpg') }}" 
+                     alt="{{ $recVideo->title }}" 
+                     class="rounded-lg w-24 h-14 object-cover border-2 border-primary group-hover:border-blue-400 transition-all">
+                <div class="min-w-0">
+                    <h4 class="text-sm font-semibold text-white group-hover:text-blue-400 truncate">
+                        {{ $recVideo->title }}
+                    </h4>
+                    <p class="text-gray-400 text-xs">
+                        {{ number_format($recVideo->view_count) }} views • 
+                        {{ $recVideo->created_at->diffForHumans() }}
+                    </p>
                 </div>
             </a>
         @endforeach
-    </div>
+    @else
+        <p class="text-gray-400 text-sm">No recommended videos found</p>
+    @endif
+</div>
 </div>
 
 <!-- JavaScript for Rating -->

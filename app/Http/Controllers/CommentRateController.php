@@ -46,12 +46,12 @@ class CommentRateController extends Controller
     {
         $comment = CommentRate::findOrFail($commentId);
         
-        if ($comment->UID == Auth::id()) {
+        if (Auth::id() === $comment->UID || Auth::user()->is_admin) {
             $comment->delete();
-            return back()->with('success', 'Comment deleted successfully!');
+            return back()->with('success', 'Comment deleted successfully');
         }
-
-        return back()->with('error', 'Unauthorized action.');
+        
+        return back()->with('error', 'You are not authorized to delete this comment');
     }
 }
 

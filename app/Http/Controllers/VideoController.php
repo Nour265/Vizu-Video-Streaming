@@ -23,11 +23,17 @@ class VideoController extends Controller
 
     public function show($id)
     {
-        $video = Video::where('VidID', $id)->firstOrFail();  // Get the video by ID
-        return view('video.show', compact('video'));  // Pass video data to the view
-    }
+        $video = Video::findOrFail($id);
 
+    // Fetch recommended videos (e.g., based on category or popularity)
+    $recommended = Video::where('VidID', '!=', $id)
+                        ->inRandomOrder() // Example sorting
+                        ->take(10)
+                        ->get();
     
 
+    //dd($recommended);
+    return view('video.show', compact('video', 'recommended'));
+    }
 }
 

@@ -43,8 +43,13 @@ Route::get('/video', function () {
 
 // Video Detail Route
 Route::get('/video/{id}', function ($id) {
-    $video = Video::where('VidID', $id)->firstOrFail();
-    return view('video', ['video' => $video]);
+    $video = Video::where('VidID', $id)->firstOrFail(); // Get the specific video by VidID
+    $recommended = Video::where('VidID', '!=', $id)
+                        ->inRandomOrder() // Randomly order the videos
+                        ->take(10)
+                        ->get(); // Get recommended videos
+
+    return view('video', compact('video', 'recommended')); // Pass both the video and recommended videos
 })->name('video.show');
 
 Route::get('/search', [VideoController::class, 'search'])->name('videos.search');
