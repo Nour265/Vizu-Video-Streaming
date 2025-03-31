@@ -63,8 +63,10 @@ Route::get('/admin/users/{user}/edit', [AdminController::class, 'editUser'])->na
 Route::put('/admin/users/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
 Route::delete('/admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
 Route::get('/admin/manage-users/search', [AdminController::class, 'searchUsers'])->name('admin.manage.users.search');
-Route::get('/admin/manage-videos/search', [AdminController::class, 'searchVideos'])->name('admin.manage.videos.search');
-
+Route::get('/admin/manage-videos/search', [AdminController::class, 'searchVid'])->name('admin.manage.videos.search');
+Route::get('/admin/videos/{VidID}/edit', [AdminController::class, 'editVideo'])->name('admin.videos.edit');
+Route::put('/admin/videos/{VidID}', [AdminController::class, 'updateVideo'])->name('admin.videos.update');
+Route::delete('/admin/videos/{VidID}', [AdminController::class, 'destroy'])->name('admin.videos.destroy');
 
 // ✅ Contact Us Routes
 Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');

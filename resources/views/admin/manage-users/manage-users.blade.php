@@ -42,7 +42,7 @@
                             </span>
                         </td>
                         <td class="py-3 px-4 text-center">
-                            <a href="{{ route('admin.users.edit', $user->UID) }}" class="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-md transition">Edit</a>
+                            <a href="{{ route('admin.users.edit', $user->UID) }}" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md transition">Edit</a>
 
                             <!-- Delete Button with Confirmation -->
                             <button onclick="openDeleteModal({{ $user->UID }})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition ml-2">

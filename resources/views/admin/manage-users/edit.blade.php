@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-<div class="container mx-auto mt-10">
+<div class="container mx-auto mt-20">
     <div class="bg-gray-800 text-white shadow-lg rounded-lg p-6">
         <h1 class="text-center text-3xl font-bold text-primary mb-6">Edit User</h1>
 

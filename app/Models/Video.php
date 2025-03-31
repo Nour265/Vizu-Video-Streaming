@@ -12,7 +12,7 @@ class Video extends Model
     protected $primaryKey = 'VidID';
 
     protected $fillable = [
-        'CID', 'UID', 'length', 'upload_date', 'genre', 'view_count'
+        'CID', 'UID', 'title', 'description', 'video_path', 'thumbnail', 'length', 'upload_date', 'genre', 'view_count',
     ];
 
     public function channel()

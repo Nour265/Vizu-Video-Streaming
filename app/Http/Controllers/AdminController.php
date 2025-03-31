@@ -26,15 +26,20 @@ class AdminController extends Controller
     {
         $query = $request->input('query');
         if ($query) {
-            $videos = Video::where('title', 'like', '%' . $query . '%')->paginate(10);
+            $videos = Video::where('title', 'like', '%' . $query . '%')->get();
         } else {
-            $videos = Video::paginate(10);
+            $videos = Video::get();
         }
         return view('admin.manage-videos.manage-videos', compact('videos'));
     }
     public function dashboard()
     {
-        return view('admin.dashboard'); // Make sure this view exists in resources/views/admin/dashboard.blade.php
+        return view('admin.dashboard', [
+            'userCount' => User::count(),
+            'videoCount' => Video::count(),
+            'newUsersToday' => User::whereDate('created_at', today())->count(),
+            'recentVideos' => Video::latest()->take(5)->get(),
+        ]);
     }
 
     public function editUser(User $user)
@@ -72,7 +77,7 @@ class AdminController extends Controller
     public function searchVideos(Request $request)
     {
         $query = $request->input('query');
-        $videos = Video::where('title', 'like', '%' . $query . '%')->paginate(10);
+        $videos = Video::where('title', 'like', '%' . $query . '%')->get();
         return view('video.show', compact('video'));
     }
 
@@ -82,5 +87,40 @@ class AdminController extends Controller
         $video = Video::where('VidID', $id)->firstOrFail();
         return view('admin.manage-videos.view', ['video' => $video]);
     }
+
+    public function destroy($VidID)
+    {
+        $video = Video::findOrFail($VidID);
+        $video->delete();
+
+        return redirect()->route('admin.manage.videos')->with('success', 'Video deleted successfully.');
+    }
+
+    public function editVideo($VidID)
+    {
+        $video = Video::where('VidID', $VidID)->firstOrFail();
+        return view('admin.manage-videos.edit', ['video' => $video]);
+    }
+
+    public function updateVideo(Request $request, $VidID)
+    {
+        $video = Video::where('VidID', $VidID)->firstOrFail();
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'genre' => 'required|string|max:255',
+        ]);
+        $video->update($validated);
+
+        return redirect()->route('admin.manage.videos')->with('success', 'Video updated successfully.');
+    }
+
+    public function searchVid(Request $request)
+    {
+        $query = $request->input('query');
+        $videos = Video::where('title', 'like', '%' . $query . '%')->get();
+        return view('admin.manage-videos.manage-videos', compact('videos'));
+    }
+    
 
 }
