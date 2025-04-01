@@ -37,6 +37,9 @@
     <div id="sidebar" class="fixed left-0 top-0 w-60 bg-darkBackground text-white h-full min-h-screen p-4 transform -translate-x-full transition-transform duration-300 border-r border-gray-700">
         <h2 class="text-xl font-bold text-primary mb-6">Menu</h2>
         <ul class="space-y-4">
+            <a href="{{ route('home') }}" class="block bg-sky-600 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition text-center">
+                Home
+            </a>
             <a href="{{ route('contact.show') }}" class="block bg-sky-600 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition text-center">
                 Contact Us
             </a>
@@ -66,12 +69,12 @@
             <!-- ✅ User Dropdown -->
             <div class="relative">
                 <button id="user-dropdown-toggle" class="focus:outline-none">
-                    <img src="{{ asset('images/user-icon.png') }}" alt="User Icon" class="h-10 w-10 rounded-full border border-gray-500">
+                    <img src="{{ asset(auth()->user()->profile_picture ?? 'images/user-icon.png') }}" alt="User Icon" class="h-10 w-10 rounded-full border border-gray-500">
                 </button>
 
                 <div id="user-dropdown" class="dropdown-menu absolute right-0 mt-2 w-40 bg-gray-800 border border-gray-700 rounded-lg shadow-lg py-2">
                     @auth
-                        <a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 transition">Profile</a>
+                        <a href="{{ route('profile.show', auth()->user()->UID ) }}" class="block px-4 py-2 text-white hover:bg-gray-700 transition">Profile</a>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
                             <button type="submit" class="w-full text-left px-4 py-2 text-red-400 hover:bg-gray-700 transition">

@@ -7,7 +7,7 @@
         <!-- Profile Header -->
         <div class="bg-gray-800 p-8 rounded-lg shadow-lg text-center">
             <!-- Profile Picture -->
-            <img src="{{ asset($user->profile_picture ?? 'images/default-profile.png') }}" 
+            <img src="{{ asset($user->profile_picture ?? 'images/user-icon.png') }}" 
                  alt="Profile Picture" 
                  class="w-32 h-32 rounded-full mx-auto border-4 border-primary">
             <!-- User Name -->
@@ -29,14 +29,13 @@
             </div>
 
             <!-- Edit Profile Button (Only for the logged-in user) -->
-            @if(Auth::check() && Auth::id() === $user->id)
+
                 <div class="mt-6 text-center">
-                    <a href="{{ route('profile.edit', $user->id) }}" 
-                       class="bg-primary text-black px-6 py-2 rounded-full font-semibold hover:bg-primary/90 transition">
-                        Edit Profile
-                    </a>
+                <a href="{{ route('profile.edit', ['id' => auth()->id()]) }}"
+   class="bg-primary text-black px-6 py-2 rounded-full font-semibold hover:bg-primary/90 transition">
+    Edit Profile
+</a>
                 </div>
-            @endif
         </div>
     </div>
 </div>

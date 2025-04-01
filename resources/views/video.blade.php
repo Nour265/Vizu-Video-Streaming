@@ -55,7 +55,7 @@
             
             <!-- User pfp -->
             <div class="flex-shrink-0">
-            <img src="{{ asset($comment->user->profile_picture ?? 'images/default-profile.png') }}"  
+            <img src="{{ asset($comment->user->profile_picture ?? 'images/user-icon.png') }}"  
                      alt="{{ $comment->user->name }}" 
                      class="w-10 h-10 rounded-full border border-primary">
             </div>
