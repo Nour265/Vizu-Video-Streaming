@@ -15,13 +15,26 @@
         <h2 class="mt-4 text-2xl font-semibold text-primary">{{ $video->title }}</h2>
         <p class="text-gray-400 text-sm">{{ number_format($video->view_count) }} views • {{ $video->created_at->diffForHumans() }}</p>
 
-        <!-- Subscribe Button -->
-        <div class="mt-4 flex items-center">
-            <span class="text-white font-semibold text-lg mr-3">Video Creator</span>
-            <button class="bg-primary text-white px-4 py-2 rounded hover:bg-blue-400">Subscribe</button>
-        </div>
+
+       
 
         
+        <!-- Subscribe Button -->
+        <div class="flex items-center space-x-4">
+    <span class="text-lg font-semibold">{{ $name }}</span>
+    
+    <!-- Subscribe Button -->
+    <button id="subscribe-btn" 
+            class="px-4 py-2 {{ $isSubscribed ? 'bg-red-500' : 'bg-blue-500' }} text-white rounded-md"
+            onclick="toggleSubscription('{{ $channelId }}')">
+        {{ $isSubscribed ? 'Unsubscribe' : 'Subscribe' }}
+    </button>
+    
+    <!-- Subscription Count -->
+    <span class="text-sm text-gray-600">{{ $subCount }} Subscribers</span>
+</div>
+
+
 
     <div class="mt-6">
         <h3 class="text-lg font-semibold text-primary">Comments</h3>
@@ -149,6 +162,34 @@
     document.addEventListener('DOMContentLoaded', () => {
         const player = new Plyr('#player');
     });
+</script>
+
+
+<script>
+    // You can pass the initial subscription status from the backend to JavaScript
+    const isSubscribed = '@json($isSubscribed)';  // assuming $isSubscribed is passed from the controller
+
+    function toggleSubscription(channelId) {
+    fetch(`/subscribe/${channelId}`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        let btn = document.getElementById('subscribe-btn');
+        
+        if (data.status === 'subscribed') {
+            btn.innerText = 'Unsubscribe';
+            btn.classList.replace('bg-blue-500', 'bg-red-500');
+        } else {
+            btn.innerText = 'Subscribe';
+            btn.classList.replace('bg-red-500', 'bg-blue-500');
+        }
+    });
+}
 </script>
 
 @endsection

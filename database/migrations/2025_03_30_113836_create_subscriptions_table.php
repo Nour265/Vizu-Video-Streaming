@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('SID')->constrained('users', 'UID')->onDelete('cascade'); // User who subscribes
-            $table->foreignId('CID')->constrained('channels', 'CID')->onDelete('cascade');// User who owns the channel/video
+            $table->foreignId('UID')->constrained('users', 'UID')->onDelete('cascade'); // Reference to the 'users' table
+            $table->foreignId('CID')->constrained('channels', 'CID')->onDelete('cascade'); // Reference to the 'channels' table
             $table->timestamps();
-    
-            $table->unique(['SID', 'CID']); // Ensure each subscriber can only subscribe once to a creator
         });
     }
 

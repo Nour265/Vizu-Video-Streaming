@@ -9,6 +9,10 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentRateController;
+use App\Http\Controllers\SubscriptionController;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Subscription;
+
 
 // Home Page Route
 Route::get('/', function () {
@@ -43,13 +47,28 @@ Route::get('/video', function () {
 
 // Video Detail Route
 Route::get('/video/{id}', function ($id) {
-    $video = Video::where('VidID', $id)->firstOrFail(); // Get the specific video by VidID
-    $recommended = Video::where('VidID', '!=', $id)
-                        ->inRandomOrder() // Randomly order the videos
-                        ->take(10)
-                        ->get(); // Get recommended videos
+    $video = Video::findOrFail($id);
 
-    return view('video', compact('video', 'recommended')); // Pass both the video and recommended videos
+    $channel = $video->channel;
+
+    $channelId = $channel->CID;
+
+    $subCount = $channel->sub_count;
+
+    $name = $channel->name;
+
+    $recommended = Video::where('VidID', '!=', $id)
+                        ->inRandomOrder()
+                        ->take(10)
+                        ->get();
+
+    $isSubscribed = false;
+    if (Auth::check()) {
+        $isSubscribed = Subscription::where('UID', Auth::id())
+                                    ->where('CID', $channelId)
+                                    ->exists();
+    }
+    return view('video', compact('video', 'recommended', 'channelId', 'isSubscribed', 'subCount', 'name')); // Pass both the video and recommended videos
 })->name('video.show');
 
 Route::get('/search', [VideoController::class, 'search'])->name('videos.search');
@@ -89,3 +108,9 @@ Route::get('/about', function () {
 Route::post('/video/{videoId}/comment', [CommentRateController::class, 'store'])->name('comment.store');
 Route::get('/video/{videoId}/comments', [CommentRateController::class, 'show'])->name('comments.show');
 Route::delete('/comment/{commentId}', [CommentRateController::class, 'destroy'])->name('comment.destroy');
+
+
+// Subscribe route
+Route::post('/subscribe/{creatorId}', [SubscriptionController::class, 'subscribe'])
+    ->middleware('auth') // Ensures only logged-in users can subscribe
+    ->name('subscribe');

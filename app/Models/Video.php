@@ -17,7 +17,7 @@ class Video extends Model
 
     public function channel()
     {
-        return $this->belongsTo(Channel::class, 'CID');
+        return $this->belongsTo(Channel::class, 'CID', 'CID');
     }
 
     public function user()

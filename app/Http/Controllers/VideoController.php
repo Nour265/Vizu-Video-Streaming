@@ -3,6 +3,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Video;
+use App\Models\Channel;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Subscription;
+
 
 class VideoController extends Controller
 {
@@ -20,20 +24,27 @@ class VideoController extends Controller
     return view('videos.search', compact('videos', 'query'));
 }
 
+public function show($id, $CID)
+{
+    $video = Video::findOrFail($id);
 
-    public function show($id)
-    {
-        $video = Video::findOrFail($id);
+    $channel = $video->channel;
 
-    // Fetch recommended videos (e.g., based on category or popularity)
+    $subCount = $channel->sub_count;
+    $name = $channel->name;
+    $channelId = $channel->CID;
+
     $recommended = Video::where('VidID', '!=', $id)
-                        ->inRandomOrder() // Example sorting
+                        ->inRandomOrder()
                         ->take(10)
                         ->get();
-    
 
-    //dd($recommended);
-    return view('video.show', compact('video', 'recommended'));
-    }
+    $isSubscribed = Subscription::where('UID', Auth::user()->UID)
+        ->where('CID', $channelId)
+        ->exists();
+
+    return view('video.show', compact('video', 'recommended', 'channelId', 'isSubscribed', 'subCount', 'name'));
+}
+
 }
 
