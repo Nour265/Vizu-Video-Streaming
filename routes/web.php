@@ -53,7 +53,6 @@ Route::get('/video/{id}', function ($id) {
 
     $channelId = $channel->CID;
 
-    $subCount = $channel->sub_count;
 
     $name = $channel->name;
 
@@ -68,7 +67,7 @@ Route::get('/video/{id}', function ($id) {
                                     ->where('CID', $channelId)
                                     ->exists();
     }
-    return view('video', compact('video', 'recommended', 'channelId', 'isSubscribed', 'subCount', 'name')); // Pass both the video and recommended videos
+    return view('video', compact('video', 'recommended', 'channelId', 'isSubscribed', 'name')); // Pass both the video and recommended videos
 })->name('video.show');
 
 Route::get('/search', [VideoController::class, 'search'])->name('videos.search');

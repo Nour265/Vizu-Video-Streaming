@@ -30,8 +30,6 @@
         {{ $isSubscribed ? 'Unsubscribe' : 'Subscribe' }}
     </button>
     
-    <!-- Subscription Count -->
-    <span class="text-sm text-gray-600">{{ $subCount }} Subscribers</span>
 </div>
 
 

@@ -30,7 +30,6 @@ public function show($id, $CID)
 
     $channel = $video->channel;
 
-    $subCount = $channel->sub_count;
     $name = $channel->name;
     $channelId = $channel->CID;
 
@@ -43,7 +42,7 @@ public function show($id, $CID)
         ->where('CID', $channelId)
         ->exists();
 
-    return view('video.show', compact('video', 'recommended', 'channelId', 'isSubscribed', 'subCount', 'name'));
+    return view('video.show', compact('video', 'recommended', 'channelId', 'isSubscribed', 'name'));
 }
 
 }
