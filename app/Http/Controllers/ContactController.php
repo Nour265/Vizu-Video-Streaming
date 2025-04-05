@@ -22,7 +22,7 @@ class ContactController extends Controller
         ]);
 
         // Admin Email
-        $adminEmail = "nourghannamlb@gmail.com"; // Change this to your admin email
+        $adminEmail = "ghadiabk05@gmail.com"; // Change this to your admin email
 
         // Send email using Laravel Mail
         Mail::raw(
