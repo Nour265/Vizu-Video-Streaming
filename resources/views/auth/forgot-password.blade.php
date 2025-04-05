@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="flex items-center justify-center min-h-screen">
-    <div class="bg-gray-900 text-white p-8 rounded-lg shadow-lg w-full max-w-md">
+<div class="flex items-center justify-center">
+    <div class="mt-20 text-white p-8 rounded-lg w-full max-w-md">
         <h2 class="text-2xl font-bold mb-6 text-center">Forgot Password</h2>
 
         @if (session('status'))

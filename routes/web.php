@@ -87,9 +87,10 @@ Route::put('/admin/videos/{VidID}', [AdminController::class, 'updateVideo'])->na
 Route::delete('/admin/videos/{VidID}', [AdminController::class, 'destroy'])->name('admin.videos.destroy');
 
 // Contact Us Routes
-Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');
-Route::post('/contact', [ContactController::class, 'sendContactEmail'])->name('contact.send');
-
+Route::middleware('auth')->group(function () {
+    Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');
+    Route::post('/contact', [ContactController::class, 'sendContactEmail'])->name('contact.send');
+});
 // Profile Routes
 Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
 Route::middleware('auth')->group(function () {

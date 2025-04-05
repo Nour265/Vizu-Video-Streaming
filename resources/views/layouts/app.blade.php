@@ -142,9 +142,7 @@
                         success: function (data) {
                             $('#search-results').html(data);
                         },
-                        error: function () {
-                            alert('Search failed. Please try again.');
-                        }
+                       
             });
         }
     }
