@@ -12,6 +12,7 @@ use App\Http\Controllers\CommentRateController;
 use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Subscription;
+use App\Http\Controllers\Auth\NewPasswordController;
 
 
 // Home Page Route
@@ -35,7 +36,7 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::post('/login', [LoginController::class, 'login']);
-
+Route::put('/reset-password', [NewPasswordController::class, 'store'])->name('password.update');
 // User Logout Route
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
@@ -86,11 +87,15 @@ Route::get('/admin/videos/{VidID}/edit', [AdminController::class, 'editVideo'])-
 Route::put('/admin/videos/{VidID}', [AdminController::class, 'updateVideo'])->name('admin.videos.update');
 Route::delete('/admin/videos/{VidID}', [AdminController::class, 'destroy'])->name('admin.videos.destroy');
 
-// Contact Us Routes
+// Contact Us and About Us Routes
 Route::middleware('auth')->group(function () {
     Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');
     Route::post('/contact', [ContactController::class, 'sendContactEmail'])->name('contact.send');
 });
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
 // Profile Routes
 Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
 Route::middleware('auth')->group(function () {
@@ -99,9 +104,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
 
 
 // Comment rating routes
