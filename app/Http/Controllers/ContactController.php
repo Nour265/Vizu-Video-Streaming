@@ -21,10 +21,8 @@ class ContactController extends Controller
             'message' => 'required|string',
         ]);
 
-        // Admin Email
         $adminEmail = "ghadiabk05@gmail.com"; // Change this to your admin email
 
-        // Send email using Laravel Mail
         Mail::raw(
             "Name: {$request->name}\nEmail: {$request->email}\n\nMessage:\n{$request->message}",
             function ($message) use ($request, $adminEmail) {

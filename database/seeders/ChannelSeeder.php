@@ -20,6 +20,6 @@ class ChannelSeeder extends Seeder
             ]);
         }
 
-        echo "✅ Seeded " . count($users) . " channels successfully!\n";
+        echo "Seeded " . count($users) . " channels successfully!\n";
     }
 }

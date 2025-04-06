@@ -26,8 +26,7 @@ class CommentRateSeeder extends Seeder
                 ]);
             }
         }
-
-        echo "✅ Seeded comments and ratings for all videos!\n";
+        echo "Seeded comments and ratings for all videos!\n";
     }
 }
 

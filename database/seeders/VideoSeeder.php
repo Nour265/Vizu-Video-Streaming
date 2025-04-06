@@ -15,7 +15,7 @@ class VideoSeeder extends Seeder
         $channels = Channel::all();
 
         foreach ($channels as $channel) {
-            for ($i = 1; $i <= 5; $i++) { // Each channel gets 5 videos
+            for ($i = 1; $i <= 5; $i++) {
                 Video::create([
                     'CID' => $channel->CID,
                     'UID' => $channel->UID,
@@ -30,7 +30,7 @@ class VideoSeeder extends Seeder
             }
         }
 
-        echo "✅ Seeded videos for all channels!\n";
+        echo "Seeded videos for all channels!\n";
     }
 }
 

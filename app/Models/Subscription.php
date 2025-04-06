@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Subscription extends Model
 {
-    use HasFactory; // Add this line
+    use HasFactory;
 
     protected $fillable = [
         'UID', 'CID',

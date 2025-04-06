@@ -11,12 +11,9 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        
-
-        // Generate multiple fake users
         $faker = Faker::create();
 
-        for ($i = 1; $i <= 10; $i++) { // Change 10 to any number you want
+        for ($i = 1; $i <= 10; $i++) {
             User::create([
                 'username' => $faker->userName,
                 'email' => $faker->unique()->safeEmail,
@@ -24,7 +21,7 @@ class UserSeeder extends Seeder
             ]);
         }
 
-        echo "✅ Seeded 10 users successfully!\n"; // Debug message
+        echo "Seeded 10 users successfully!\n";
     }
 }
 

@@ -15,12 +15,10 @@ class VideoController extends Controller
     $query = $request->input('query');
     $videos = Video::where('title', 'like', '%' . $query . '%')->get();
 
-    // If AJAX, return partial view
     if ($request->ajax()) {
         return view('partials.search-results', compact('videos'))->render();
     }
 
-    // Fallback if not AJAX
     return view('videos.search', compact('videos', 'query'));
 }
 

@@ -68,7 +68,7 @@ Route::get('/video/{id}', function ($id) {
                                     ->where('CID', $channelId)
                                     ->exists();
     }
-    return view('video', compact('video', 'recommended', 'channelId', 'isSubscribed', 'name')); // Pass both the video and recommended videos
+    return view('video', compact('video', 'recommended', 'channelId', 'isSubscribed', 'name'));
 })->name('video.show');
 
 Route::get('/search', [VideoController::class, 'search'])->name('videos.search');
@@ -104,15 +104,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-
 // Comment rating routes
 Route::post('/video/{videoId}/comment', [CommentRateController::class, 'store'])->name('comment.store');
 Route::get('/video/{videoId}/comments', [CommentRateController::class, 'show'])->name('comments.show');
 Route::delete('/comment/{commentId}', [CommentRateController::class, 'destroy'])->name('comment.destroy');
 
-
 // Subscribe route
 Route::post('/subscribe/{creatorId}', [SubscriptionController::class, 'subscribe'])
-    ->middleware('auth') // Ensures only logged-in users can subscribe
+    ->middleware('auth')
     ->name('subscribe');
