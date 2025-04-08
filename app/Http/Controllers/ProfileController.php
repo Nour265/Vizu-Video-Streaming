@@ -12,34 +12,29 @@ use App\Models\User;
 
 class ProfileController extends Controller
 {
-    public function show($id): View
-    {
-        // Fetch the user by ID
+    public function show(Request $request, $id): View
+    {        
         $user = User::findOrFail($id);
-
-        // Pass the user data to the view
         return view('profile.show', compact('user'));
     }
     
-    public function edit(Request $request): View
+    public function edit(User $user)
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        return view('profile.edit', compact('user'));
     }
-
     
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request  $request, User $user): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $validated = $request->validate([
+            'username' => 'required|string|max:255|unique:users,username,' . $user->UID . ',UID',
+            'bio' => 'nullable|string|max:1000',
+            'location' => 'nullable|string|max:255',
+            'gender' => 'nullable|in:male,female,other',
+            'age' => 'nullable|integer',
+        ]);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $user->update($validated);
+        return Redirect::route('profile.show', $user)->with('success', 'Profile updated successfully.');
     }
 
     

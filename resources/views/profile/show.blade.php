@@ -31,7 +31,7 @@
             <!-- Edit Profile Button (Only for the logged-in user) -->
 
                 <div class="mt-6 text-center">
-                <a href="{{ route('profile.edit', ['id' => auth()->id()]) }}"
+                <a href="{{ route('profile.edit', ['user' => $user->UID]) }}"
    class="bg-primary text-black px-6 py-2 rounded-full font-semibold hover:bg-primary/90 transition">
     Edit Profile
 </a>

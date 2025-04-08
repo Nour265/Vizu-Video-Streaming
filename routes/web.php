@@ -97,11 +97,11 @@ Route::get('/about', function () {
 })->name('about');
 
 // Profile Routes
-Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
 Route::middleware('auth')->group(function () {
-    Route::get('/profile/{id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/{user}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile/{user}', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 // Comment rating routes
