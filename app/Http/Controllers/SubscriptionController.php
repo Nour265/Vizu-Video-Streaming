@@ -21,17 +21,14 @@ class SubscriptionController extends Controller
     {
         $user = Auth::user();
 
-        // Check if the user is already subscribed
         $subscription = Subscription::where('UID', $user->UID)
             ->where('CID', $channelId)
             ->first();
 
         if ($subscription) {
-            // Unsubscribe (if already subscribed)
             $subscription->delete();
             return response()->json(['status' => 'unsubscribed']);
         } else {
-            // Subscribe (if not already subscribed)
             Subscription::create([
                 'UID' => $user->UID,
                 'CID' => $channelId,

@@ -34,14 +34,12 @@ class CommentRateController extends Controller
         return back()->with('success', 'Thank you for your feedback!');
     }
 
-    // Show all comments for a video
     public function show($videoId)
     {
         $video = Video::with(['comments.user'])->findOrFail($videoId);
         return view('video', compact('video'));
     }
 
-    // Delete a comment
     public function destroy($commentId)
     {
         $comment = CommentRate::findOrFail($commentId);

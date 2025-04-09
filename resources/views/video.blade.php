@@ -16,14 +16,10 @@
         <p class="text-gray-400 text-sm">{{ number_format($video->view_count) }} views • {{ $video->created_at->diffForHumans() }}</p>
 
 
-       
-
-        
-        <!-- Subscribe Button -->
-        <div class="flex items-center space-x-4">
+    <!-- Subscribe Button -->
+    <div class="flex items-center space-x-4">
     <span class="text-lg font-semibold">{{ $name }}</span>
     
-    <!-- Subscribe Button -->
     <button id="subscribe-btn" 
             class="px-4 py-2 {{ $isSubscribed ? 'bg-red-500' : 'bg-blue-500' }} text-white rounded-md"
             onclick="toggleSubscription('{{ $channelId }}')">
@@ -164,8 +160,7 @@
 
 
 <script>
-    // You can pass the initial subscription status from the backend to JavaScript
-    const isSubscribed = '@json($isSubscribed)';  // assuming $isSubscribed is passed from the controller
+    const isSubscribed = '@json($isSubscribed)';
 
     function toggleSubscription(channelId) {
     fetch(`/subscribe/${channelId}`, {

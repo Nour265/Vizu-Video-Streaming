@@ -113,3 +113,9 @@ Route::delete('/comment/{commentId}', [CommentRateController::class, 'destroy'])
 Route::post('/subscribe/{creatorId}', [SubscriptionController::class, 'subscribe'])
     ->middleware('auth')
     ->name('subscribe');
+
+//Upload video route
+Route::post('/video', [VideoController::class, 'store'])->name('videos.store');
+Route::get('/upload', function () {
+    return view('upload');
+})->name('upload');

@@ -41,6 +41,9 @@
             <a href="{{ route('home') }}" class="block bg-sky-600 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition text-center">
                 Home
             </a>
+            <a href="{{ Auth::check() ? route('upload') : route('login') }}" class="block bg-sky-600 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition text-center">
+                Upload a Video
+            </a>
             <a href="{{ route('contact.show') }}" class="block bg-sky-600 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition text-center">
                 Contact Us
             </a>
